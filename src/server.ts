@@ -1,6 +1,7 @@
 import express from "express";
-
+import dotenv from "dotenv";
 // Create a new express application instance
+dotenv.config();
 const app = express();
 
 // Set the network port
