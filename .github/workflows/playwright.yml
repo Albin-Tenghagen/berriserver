@@ -4,27 +4,55 @@ on:
     branches: [master, develop]
   pull_request:
     branches: [master, develop]
+
 jobs:
   test:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
-      - name: Install dependencies
+
+      # Install API dependencies
+      - name: Install API dependencies
+        run: |
+          cd api
+          npm ci
+
+      # Start API server in background
+      - name: Start API server
+        run: |
+          cd api
+          npm run dev &
+
+      - name: Wait for API
+        run: |
+          until nc -z localhost 1337; do
+            echo "Waiting for API..."
+            sleep 1
+          done
+
+      # Install frontend dependencies
+      - name: Install web dependencies
         run: |
           cd web
           npm ci
+
+      # Install Playwright browsers
       - name: Install Playwright Browsers
         run: |
           cd web
           npx playwright install --with-deps
+
+      # Run Playwright tests
       - name: Run Playwright tests
         run: |
           cd web
           npx playwright test
+
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
         with:
