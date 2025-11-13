@@ -22,12 +22,6 @@ jobs:
           cd api
           npm ci
 
-      # Start API server in background
-      - name: Start API server
-        run: |
-          cd api
-          npm run dev &
-
       - name: Wait for API
         run: |
           until nc -z localhost 1337; do
