@@ -33,6 +33,6 @@ test("fetch button exists and displays fetched message", async ({ page }) => {
 	const message = page.locator("article p");
 	await expect(message).toBeVisible();
 
-	// Optionally check the text content
+	// checks the text content of the <p> tag to be whats expected from the API
 	await expect(message).toHaveText(/Welcome to the BerriServer!/);
 });
