@@ -29,6 +29,23 @@ test.describe("User Registration Form", () => {
     await page.click('button[type="submit"]');
   });
 
+  test("should show validation error for invalid email", async ({ page }) => {
+    await page.fill('input[name="name"]', "John Doe");
+    await page.fill('input[name="email"]', "invalid-email");
+    await page.fill('input[name="password"]', "password123");
+    await page.fill('input[name="phone"]', "1234567890");
+
+    await page.click('button[type="submit"]');
+
+    const email = page.locator('input[name="email"]');
+
+    const isInvalidEmail = await email.evaluate(
+      (el) => (el as HTMLInputElement).validity.typeMismatch
+    );
+
+    expect(isInvalidEmail).toBe(true);
+  });
+
   test("should show validation errors for empty fields", async ({ page }) => {
     // Submit without filling
     await page.click('button[type="submit"]');
