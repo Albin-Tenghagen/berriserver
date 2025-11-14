@@ -58,7 +58,7 @@ jobs:
 
       - name: Install Playwright Browsers
         working-directory: ./web
-        run: npx playwright install --with-deps
+        run: npx playwright install chromium firefox --with-deps
 
   test:
     name: Run Playwright Tests
