@@ -6,6 +6,10 @@ export default function UserForm() {
     email: "",
     password: "",
     phone: "",
+    lastName: "",
+    address: "",
+    municipality: "",
+    description: "",
   });
 
   const handleChange = (e: any) => {
@@ -30,7 +34,7 @@ export default function UserForm() {
         </h2>
 
         <div>
-          <label className="block text-gray-700 mb-1">Name</label>
+          <label className="block text-gray-700 mb-1">Förnamn</label>
           <input
             type="text"
             name="name"
@@ -38,7 +42,59 @@ export default function UserForm() {
             onChange={handleChange}
             required
             className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
-            placeholder="Enter your name"
+            placeholder="Förnamn"
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-700 mb-1">Efternamn</label>
+          <input
+            type="text"
+            name="lastname"
+            value={formData.lastName}
+            onChange={handleChange}
+            required
+            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            placeholder="Efternamn"
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-700 mb-1">Adress</label>
+          <input
+            type="address"
+            name="address"
+            value={formData.address}
+            onChange={handleChange}
+            required
+            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            placeholder="Adress"
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-700 mb-1">Kommun</label>
+          <input
+            type="text"
+            name="municipality"
+            value={formData.municipality}
+            onChange={handleChange}
+            required
+            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            placeholder="Sök eller välj kommun"
+          />
+        </div>
+
+        <div>
+          <label className="block text-gray-700 mb-1">Beskrivning</label>
+          <input
+            type="text"
+            name="description"
+            value={formData.description}
+            onChange={handleChange}
+            required
+            className="w-full border rounded-lg px-3 py-2 focus:outline-none focus:ring focus:ring-blue-200"
+            placeholder="Beskriv ditt projekt"
           />
         </div>
 

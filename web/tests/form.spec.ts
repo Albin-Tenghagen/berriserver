@@ -7,19 +7,19 @@ test.describe("User Registration Form", () => {
   });
 
   test("should fill and submit the form successfully", async ({ page }) => {
-    // Fill name
     await page.fill('input[name="name"]', "John Doe");
 
-    // Fill email
     await page.fill('input[name="email"]', "john@example.com");
 
-    // Fill password
     await page.fill('input[name="password"]', "password123");
 
-    // Fill phone
     await page.fill('input[name="phone"]', "1234567890");
 
-    // Listen for alert
+    await page.fill('input[name="address"]', "Karlskrona");
+    await page.fill('input[name="lastname"]', "Doe");
+    await page.fill('input[name="municipality"]', "Blekinge");
+    await page.fill('input[name="description"]', "test");
+
     page.once("dialog", async (dialog) => {
       expect(dialog.message()).toBe("User registered successfully!");
       await dialog.accept();
@@ -30,10 +30,13 @@ test.describe("User Registration Form", () => {
   });
 
   test("should show validation error for invalid email", async ({ page }) => {
-    await page.fill('input[name="name"]', "John Doe");
+    await page.fill('input[name="name"]', "John");
     await page.fill('input[name="email"]', "invalid-email");
     await page.fill('input[name="password"]', "password123");
-    await page.fill('input[name="phone"]', "1234567890");
+    await page.fill('input[name="address"]', "Karlskrona");
+    await page.fill('input[name="lastname"]', "Doe");
+    await page.fill('input[name="municipality"]', "Blekinge");
+    await page.fill('input[name="description"]', "test");
 
     await page.click('button[type="submit"]');
 
@@ -54,10 +57,34 @@ test.describe("User Registration Form", () => {
     const email = page.locator('input[name="email"]');
     const password = page.locator('input[name="password"]');
     const phone = page.locator('input[name="phone"]');
+    const address = page.locator('input[name="address"]');
+    const lastname = page.locator('input[name="lastname"]');
+    const municipality = page.locator('input[name="municipality"]');
+    const description = page.locator('input[name="description"]');
 
     // Cast to HTMLInputElement to access validity
     expect(
       await name.evaluate(
+        (el) => (el as HTMLInputElement).validity.valueMissing
+      )
+    ).toBe(true);
+    expect(
+      await address.evaluate(
+        (el) => (el as HTMLInputElement).validity.valueMissing
+      )
+    ).toBe(true);
+    expect(
+      await lastname.evaluate(
+        (el) => (el as HTMLInputElement).validity.valueMissing
+      )
+    ).toBe(true);
+    expect(
+      await municipality.evaluate(
+        (el) => (el as HTMLInputElement).validity.valueMissing
+      )
+    ).toBe(true);
+    expect(
+      await description.evaluate(
         (el) => (el as HTMLInputElement).validity.valueMissing
       )
     ).toBe(true);
