@@ -131,17 +131,15 @@ jobs:
       # Run Playwright tests
       - name: Run Playwright Tests
         working-directory: ./web
-        run: npx playwright test --project=${{ matrix.browser }}
+        run: npx playwright test --project=${{ matrix.browser }} --reporter=blob
         continue-on-error: true
 
-      # Upload Playwright report per browser (unique artifacts)
-      - name: Upload Playwright report
+      - name: Upload Blob Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report-${{ matrix.browser }}
-          path: web/playwright-report/
-          retention-days: 30
+          name: playwright-blob-${{ matrix.browser }}
+          path: web/blob-report/
 
   pages:
     name: Publish Report to GitHub Pages
@@ -152,12 +150,16 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download report
+      - name: Download blob reports
         uses: actions/download-artifact@v4
         with:
-          pattern: playwright-report-*
+          pattern: playwright-blob-*
           merge-multiple: true
-          path: ./web/playwright-report/
+          path: ./web/merged-blobs/
+
+      - name: Generate merged HTML report
+        working-directory: ./web
+        run: npx playwright merge-reports --reporter=html ./merged-blobs
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
