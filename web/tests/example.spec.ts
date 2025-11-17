@@ -1,5 +1,13 @@
 import { test, expect } from "@playwright/test";
 
+//! ADDITIONAL TESTS
+//* hover color on button
+//* server error on fetch
+//? NEW FILE FOR HEADER
+//* check title
+//* check for heading element h1
+//*
+//*
 test("home page title", async ({ page }) => {
 	// Start test by navigating to your URL
 	await page.goto("http://localhost:5173/");
