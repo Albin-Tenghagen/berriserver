@@ -134,12 +134,12 @@ jobs:
         run: npx playwright test --project=${{ matrix.browser }}
         continue-on-error: true
 
-      # Upload Playwright report
+      # Upload Playwright report per browser (unique artifacts)
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.browser }}
           path: web/playwright-report/
           retention-days: 30
 
@@ -155,7 +155,8 @@ jobs:
       - name: Download report
         uses: actions/download-artifact@v4
         with:
-          name: playwright-report
+          pattern: playwright-report-*
+          merge-multiple: true
           path: ./web/playwright-report/
 
       - name: Deploy to GitHub Pages
