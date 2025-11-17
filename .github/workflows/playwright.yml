@@ -22,15 +22,31 @@ jobs:
         with:
           node-version: lts/*
 
+      # Cache API dependencies
+      - name: Cache API node_modules
+        uses: actions/cache@v3
+        id: api-cache
+        with:
+          path: api/node_modules
+          key: api-${{ hashFiles('api/package-lock.json') }}
+
       - name: Install API deps
         if: steps.api-cache.outputs.cache-hit != 'true'
         working-directory: ./api
         run: npm ci
 
+      # Cache Web dependencies
+      - name: Cache Web node_modules
+        uses: actions/cache@v3
+        id: web-cache
+        with:
+          path: web/node_modules
+          key: web-${{ hashFiles('web/package-lock.json') }}
+
       - name: Install Web deps
         if: steps.web-cache.outputs.cache-hit != 'true'
         working-directory: ./web
-        run: npm install
+        run: npm ci
 
       # Cache Playwright browsers (Chromium + Firefox)
       - name: Cache Playwright Browsers
@@ -39,22 +55,12 @@ jobs:
         with:
           path: ~/.cache/ms-playwright
           key: pw-${{ hashFiles('web/package-lock.json') }}
-          restore-keys: |
-            pw-
+          restore-keys: pw-
 
-      # Install ONLY Chromium + Firefox (skips if cached)
+      # Install only required browsers (chromium + firefox)
       - name: Install Playwright browsers
         working-directory: ./web
         run: npx playwright install chromium firefox --with-deps
-
-      # Save workspace so tests don't reinstall dependencies
-      - name: Upload workspace
-        uses: actions/upload-artifact@v4
-        with:
-          name: workspace
-          path: |
-            api/
-            web/
 
   test:
     name: Run Playwright Tests
@@ -70,15 +76,33 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Download workspace
-        uses: actions/download-artifact@v4
-        with:
-          name: workspace
-          path: ./
-
       - uses: actions/setup-node@v4
         with:
           node-version: lts/*
+
+      # Restore API cache
+      - name: Restore API node_modules
+        uses: actions/cache@v3
+        with:
+          path: api/node_modules
+          key: api-${{ hashFiles('api/package-lock.json') }}
+          restore-keys: api-
+
+      # Restore Web cache
+      - name: Restore Web node_modules
+        uses: actions/cache@v3
+        with:
+          path: web/node_modules
+          key: web-${{ hashFiles('web/package-lock.json') }}
+          restore-keys: web-
+
+      # Restore Playwright browser cache
+      - name: Restore Playwright Browsers
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-${{ hashFiles('web/package-lock.json') }}
+          restore-keys: pw-
 
       # Start API server
       - name: Start API server
@@ -104,13 +128,13 @@ jobs:
             sleep 1
           done
 
-      # Run Playwright tests in matrix
+      # Run Playwright tests
       - name: Run Playwright Tests
         working-directory: ./web
         run: npx playwright test --project=${{ matrix.browser }}
         continue-on-error: true
 
-      # Always upload report, even if tests fail
+      # Upload Playwright report
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4
         if: always()
