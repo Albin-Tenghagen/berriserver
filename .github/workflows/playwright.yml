@@ -102,7 +102,11 @@ jobs:
         run: npm run dev &
 
       - name: Wait for API
-        run: npx wait-on http://localhost:1337 --timeout 60000
+        run: |
+          until nc -z localhost 1337; do
+            echo "Waiting for API..."
+            sleep 1
+          done
 
       # Start Web server
       - name: Start Web server
@@ -110,7 +114,11 @@ jobs:
         run: npm run dev &
 
       - name: Wait for Web
-        run: npx wait-on http://localhost:5173 --timeout 60000
+        run: |
+          until nc -z localhost 5173; do
+            echo "Waiting for Web..."
+            sleep 1
+          done
 
       # Run Playwright tests in matrix
       - name: Run Playwright Tests
