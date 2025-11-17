@@ -40,6 +40,8 @@ test.describe("User Registration Form", () => {
 
     await page.click('button[type="submit"]');
 
+    await page.evaluate(() => document.querySelector("form")!.reportValidity());
+
     const email = page.locator('input[name="email"]');
 
     const isInvalidEmail = await email.evaluate(
