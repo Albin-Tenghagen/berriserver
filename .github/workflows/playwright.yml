@@ -48,10 +48,22 @@ jobs:
         working-directory: ./web
         run: npm ci
 
-      # Use official Playwright cache
-      - uses: microsoft/playwright-github-action@v1
+      # Cache Playwright browsers (Chromium + Firefox)
+      - name: Cache Playwright Browsers
+        uses: actions/cache@v3
+        id: pw-cache
+        with:
+          path: ~/.cache/ms-playwright
+          key: pw-${{ hashFiles('web/package-lock.json') }}
+          restore-keys: |
+            pw-
 
-      # Save workspace as artifact so test job doesn't reinstall
+      # Install ONLY Chromium + Firefox (skips if cached)
+      - name: Install Playwright browsers
+        working-directory: ./web
+        run: npx playwright install chromium firefox --with-deps
+
+      # Save workspace so tests don't reinstall dependencies
       - name: Upload workspace
         uses: actions/upload-artifact@v4
         with:
@@ -100,13 +112,13 @@ jobs:
       - name: Wait for Web
         run: npx wait-on http://localhost:5173 --timeout 60000
 
-      # Run Playwright Test for each browser
+      # Run Playwright tests in matrix
       - name: Run Playwright Tests
         working-directory: ./web
         run: npx playwright test --project=${{ matrix.browser }}
         continue-on-error: true
 
-      # Upload report always
+      # Always upload report, even if tests fail
       - name: Upload Playwright report
         uses: actions/upload-artifact@v4
         if: always()
