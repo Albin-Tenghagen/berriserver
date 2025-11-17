@@ -63,7 +63,7 @@ test.describe("User Registration Form", () => {
     const lastname = page.locator('input[name="lastname"]');
     const municipality = page.locator('input[name="municipality"]');
     const description = page.locator('input[name="description"]');
-
+    await page.evaluate(() => document.querySelector("form")!.reportValidity());
     // Cast to HTMLInputElement to access validity
     expect(
       await name.evaluate(
