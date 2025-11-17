@@ -13,7 +13,7 @@ export function meta({}: Route.MetaArgs) {
 export default function Rådgiving() {
 	return (
 		<main>
-			{/* <Header /> */}
+			<Header />
 			<h1>Rådgiving</h1>
 			<Welcome />
 			<Button />

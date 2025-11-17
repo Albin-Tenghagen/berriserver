@@ -13,7 +13,7 @@ export function meta({}: Route.MetaArgs) {
 export default function Byggtjänster() {
 	return (
 		<main>
-			{/* <Header /> */}
+			<Header />
 			<h1>Byggtjänster</h1>
 			<Welcome />
 			<Button />

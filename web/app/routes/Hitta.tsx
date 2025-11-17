@@ -13,7 +13,7 @@ export function meta({}: Route.MetaArgs) {
 export default function Hitta() {
 	return (
 		<main>
-			{/* <Header /> */}
+			<Header />
 			<h1>Hitta</h1>
 			<Welcome />
 			<Button />
