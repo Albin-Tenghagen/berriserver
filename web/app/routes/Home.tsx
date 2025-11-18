@@ -6,7 +6,7 @@ import { Header } from "../components/header/header";
 export function meta({}: Route.MetaArgs) {
 	return [
 		{ title: "BerriPi React Router App" },
-		{ name: "description", content: "Welcome to React Router!" },
+		{ name: "description", content: "Welcome to React Router!!" },
 	];
 }
 
