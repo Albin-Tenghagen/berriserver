@@ -20,7 +20,7 @@ test.describe("BerriPi React Router App", () => {
 	});
 
 	test("nav bar should contain 3 links", async ({ page }) => {
-		await expect(page.locator("main header nav ul li")).toHaveCount(3);
+		await expect(page.locator("main header nav ul li")).toHaveCount(4);
 	});
 
 	test("Hitta link navigates to /hitta", async ({ page }) => {

@@ -14,8 +14,8 @@ export default function Home() {
 	return (
 		<main>
 			<Header />
-			<Welcome />
-			<Button />
+			{/* <Welcome /> */}
+			<Buttons />
 			<UserForm />
 		</main>
 	);
