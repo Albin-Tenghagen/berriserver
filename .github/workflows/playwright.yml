@@ -66,6 +66,10 @@ jobs:
     name: Run Playwright Tests
     needs: setup
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        shardIndex: [1, 2, 3, 4]
+        shardTotal: [4]
     timeout-minutes: 60
 
     strategy:
@@ -131,14 +135,14 @@ jobs:
       # Run Playwright tests
       - name: Run Playwright Tests
         working-directory: ./web
-        run: npx playwright test --project=${{ matrix.browser }} --reporter=blob
+        run: npx playwright test --shard=${{ matrix.shardIndex }}/${{ matrix.shardTotal }} --reporter=blob
         continue-on-error: true
 
       - name: Upload Blob Report
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: playwright-blob-${{ matrix.browser }}
+          name: blob-report-${{ matrix.shardIndex }}
           path: web/blob-report/
 
   pages:
@@ -153,7 +157,7 @@ jobs:
       - name: Download blob reports
         uses: actions/download-artifact@v4
         with:
-          pattern: playwright-blob-*
+          pattern: blob-report-*
           merge-multiple: true
           path: ./web/merged-blobs/
 
