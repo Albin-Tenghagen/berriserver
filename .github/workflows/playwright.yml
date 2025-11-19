@@ -67,15 +67,11 @@ jobs:
     needs: setup
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         shardIndex: [1, 2, 3, 4]
         shardTotal: [4]
     timeout-minutes: 60
-
-    strategy:
-      fail-fast: false
-      matrix:
-        browser: [chromium, firefox]
 
     steps:
       - uses: actions/checkout@v4
