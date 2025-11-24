@@ -1,15 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-//! ADDITIONAL TESTS
-//* hover color on button
-//* server error on fetch
-//? NEW FILE FOR HEADER
-//* check title
-//* check for heading element h1
-//*
-//*
 test("home page title", async ({ page }) => {
-	// Start test by navigating to your URL
 	await page.goto("http://localhost:5173/");
 
 	// Check the page title
@@ -17,7 +8,6 @@ test("home page title", async ({ page }) => {
 });
 
 test("home page heading", async ({ page }) => {
-	// Start test by navigating to your URL
 	await page.goto("http://localhost:5173/");
 
 	// Check the H1 text in the Button Component
@@ -26,7 +16,6 @@ test("home page heading", async ({ page }) => {
 });
 
 test("fetch button exists and displays fetched message", async ({ page }) => {
-	// Start test by navigating to your URL
 	await page.goto("http://localhost:5173/");
 
 	// Get the button by its role and the name
@@ -34,10 +23,8 @@ test("fetch button exists and displays fetched message", async ({ page }) => {
 	const fetchButton = page.getByRole("button", { name: "Fetch Data" });
 	await expect(fetchButton).toBeVisible();
 
-	// Click and locate the button to fetch data
 	await fetchButton.click();
 
-	// Wait for the paragraph with the fetched message to appear
 	const message = page.locator("article p");
 	await expect(message).toBeVisible();
 
