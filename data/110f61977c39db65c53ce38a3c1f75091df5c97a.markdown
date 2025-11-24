@@ -1,0 +1,65 @@
+# Page snapshot
+
+```yaml
+- main [ref=e2]:
+  - generic [ref=e3]:
+    - link "Bygglov" [ref=e5] [cursor=pointer]:
+      - /url: /
+      - img "Bygglov" [ref=e6]
+    - navigation [ref=e7]:
+      - list [ref=e8]:
+        - listitem [ref=e9]:
+          - link "Hitta" [ref=e10] [cursor=pointer]:
+            - /url: /hitta
+        - listitem [ref=e11]:
+          - link "Rådgivning" [ref=e12] [cursor=pointer]:
+            - /url: /radgivning
+        - listitem [ref=e13]:
+          - link "Byggtjänster" [ref=e14] [cursor=pointer]:
+            - /url: /byggtjanster
+  - generic [ref=e16]:
+    - article [ref=e17]:
+      - img "React Router" [ref=e19]
+    - navigation [ref=e21]:
+      - paragraph [ref=e22]: What's next?
+      - list [ref=e23]:
+        - listitem [ref=e24]:
+          - link "React Router Docs" [ref=e25] [cursor=pointer]:
+            - /url: https://reactrouter.com/docs
+            - img [ref=e26]
+            - text: React Router Docs
+        - listitem [ref=e28]:
+          - link "Visit my linkedin" [ref=e29] [cursor=pointer]:
+            - /url: https://www.linkedin.com/in/albin-tenghagen-980685211/
+  - article [ref=e30]:
+    - generic [ref=e31]:
+      - heading "BerryPi" [level=1] [ref=e32]
+      - button "Fetch Data" [ref=e33]
+  - generic [ref=e35]:
+    - heading "User Registration" [level=2] [ref=e36]
+    - generic [ref=e37]:
+      - generic [ref=e38]: Förnamn
+      - textbox "Förnamn" [ref=e39]
+    - generic [ref=e40]:
+      - generic [ref=e41]: Efternamn
+      - textbox "Efternamn" [ref=e42]
+    - generic [ref=e43]:
+      - generic [ref=e44]: Adress
+      - textbox "Adress" [ref=e45]
+    - generic [ref=e46]:
+      - generic [ref=e47]: Kommun
+      - textbox "Sök eller välj kommun" [ref=e48]
+    - generic [ref=e49]:
+      - generic [ref=e50]: Beskrivning
+      - textbox "Beskriv ditt projekt" [ref=e51]
+    - generic [ref=e52]:
+      - generic [ref=e53]: Email
+      - textbox "example@email.com" [ref=e54]
+    - generic [ref=e55]:
+      - generic [ref=e56]: Password
+      - textbox "Enter your password" [ref=e57]
+    - generic [ref=e58]:
+      - generic [ref=e59]: Phone Number
+      - textbox "1234567890" [ref=e60]
+    - button "Register" [ref=e61]
+```
