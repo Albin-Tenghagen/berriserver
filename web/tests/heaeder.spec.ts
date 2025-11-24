@@ -19,11 +19,11 @@ test.describe("BerriPi React Router App", () => {
 		await expect(page).toHaveURL("http://localhost:5173/");
 	});
 
-	test("nav bar should contain 3 links", async ({ page }) => {
+	test("Nav bar should contain 3 links", async ({ page }) => {
 		await expect(page.locator("main header nav ul li")).toHaveCount(3);
 	});
 
-	test("Hitta link navigates to /hitta", async ({ page }) => {
+	test("Link navigates to /hitta", async ({ page }) => {
 		await page.locator("main header a", { hasText: "Hitta" }).click();
 		await expect(page).toHaveURL("http://localhost:5173/hitta");
 	});
