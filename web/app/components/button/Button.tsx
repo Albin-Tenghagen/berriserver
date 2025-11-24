@@ -10,7 +10,6 @@ export function Button() {
 			const data = await response.json();
 			console.log("Fetched data:", data);
 
-			// Update state with fetched message
 			setMessage(data.message);
 		} catch (error) {
 			console.error("Error fetching data:", error);
@@ -25,12 +24,12 @@ export function Button() {
 
 				<button
 					onClick={handleClick}
-					className="px-6 py-3 bg-purple-500 hover:bg-purple-600 active:bg-purple-700 text-white font-semibold rounded-md shadow-md transition-all duration-300"
+					className="px-6 py-3 bg-purple-500 hover:bg-purple-600 active:bg-purple-700 text-white font-semibold rounded-md shadow-md transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500"
 				>
 					Fetch Data
 				</button>
 
-				{/* Render the message if it exists */}
+				{/* Render the message */}
 				{message && (
 					<p className="mt-6 text-lg text-gray-200 bg-gray-800 px-4 py-2 rounded-md border border-gray-600">
 						{message}
